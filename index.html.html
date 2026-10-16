@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AgriPath — B.Sc. (Hons.) Agriculture Student Hub (v1.0)</title>
+  <style>
+    /* =========================================================
+       PART 1: CSS STYLING (Colors, Layout, Cards & Responsive Grid)
+       ========================================================= */
+    :root {
+      --bg: #f4f7f4;
+      --surface: #ffffff;
+      --surface-alt: #eaf2eb;
+      --primary: #1b5e20;
+      --primary-light: #2e7d32;
+      --accent: #f57f17;
+      --text: #1c281e;
+      --muted: #526356;
+      --border: #d5e2d7;
+      --radius: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      padding-bottom: 48px;
+    }
+
+    /* Top Header Banner */
+    header {
+      background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 100%);
+      color: #ffffff;
+      padding: 24px 20px;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
+    }
+
+    .container {
+      max-width: 1140px;
+      margin: 0 auto;
+    }
+
+    .header-top {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .brand h1 {
+      font-size: 1.65rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .brand p {
+      font-size: 0.92rem;
+      opacity: 0.92;
+      margin-top: 4px;
+    }
+
+    .verified-badge {
+      background: rgba(255, 255, 255, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+
+    /* Navigation Tabs */
+    .nav-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    .tab-btn {
+      background: rgba(255, 255, 255, 0.14);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 10px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: all 0.18s ease;
+    }
+
+    .tab-btn:hover {
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    .tab-btn.active {
+      background: #ffffff;
+      color: var(--primary);
+      border-color: #ffffff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Main Content Sections */
+    main {
+      padding: 24px 20px;
+    }
+
+    .tab-panel {
+      display: none;
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    .section-header {
+      margin-bottom: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 12px;
+    }
+
+    .section-header h2 {
+      font-size: 1.35rem;
+      color: var(--primary);
+    }
+
+    .section-header p {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    /* Cards & Grids */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+      gap: 18px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: 0 2px 6px rgba(27, 94, 32, 0.04);
+    }
+
+    .card h3 {
+      font-size: 1.05rem;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+
+    .pill {
+      display: inline-block;
+      background: var(--surface-alt);
+      color: var(--primary);
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      margin-right: 6px;
+      margin-bottom: 6px;
+    }
+
+    .pill.accent {
+      background: #fff3e0;
+      color: #e65100;
+    }
+
+    /* Filter Bar */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 18px;
+      background: var(--surface);
+      padding: 12px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+    }
+
+    .filter-bar select,
+    .filter-bar input {
+      padding: 9px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      flex: 1;
+      min-width: 180px;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      padding: 9px 16px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-light);
+    }
+
+    /* Tables */
+    .table-wrap {
+      overflow-x: auto;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+
+    th, td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      background: var(--surface-alt);
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    a {
+      color: var(--primary-light);
+      text-decoration: underline;
+      font-weight: 600;
+    }
+
+    /* Study Task Tracker */
+    .progress-box {
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 18px;
+    }
+
+    .progress-bar-bg {
+      width: 100%;
+      height: 12px;
+      background: #cde0d0;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: var(--primary);
+      width: 0%;
+      transition: width 0.25s ease;
+    }
+
+    .task-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .task-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 12px 14px;
+      border-radius: 10px;
+    }
+
+    .task-item.done span.task-title {
+      text-decoration: line-through;
+      color: var(--muted);
+    }
+
+    .task-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .delete-btn {
+      background: #ffebee;
+      color: #c62828;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =========================================================
+       PART 2: HTML STRUCTURE (Header, Navigation Tabs & Panels)
+       ========================================================= -->
+  <header>
+    <div class="container">
+      <div class="header-top">
+        <div class="brand">
+          <h1>🌾 AgriPath: B.Sc. (Hons.) Agriculture Hub</h1>
+          <p>Syllabus, Notes, NIRF College Ranks, Skill Courses, Study Task Tracker & Career Roadmap</p>
+        </div>
+        <div class="verified-badge">
+          ✓ Verified ICAR 6th Deans' Committee (2024–26) & NIRF 2025 Data
+        </div>
+      </div>
+
+      <nav class="nav-tabs" aria-label="Main sections">
+        <button class="tab-btn active" onclick="switchTab('syllabus', this)">1. Sem-Wise Syllabus, Notes & Skills</button>
+        <button class="tab-btn" onclick="switchTab('tracker', this)">2. Study Task Tracker</button>
+        <button class="tab-btn" onclick="switchTab('colleges', this)">3. Ranked Colleges & Entrances</button>
+        <button class="tab-btn" onclick="switchTab('skills', this)">4. Skill Courses (SEC & NPTEL)</button>
+        <button class="tab-btn" onclick="switchTab('careers', this)">5. Future Options & Govt Jobs</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- TAB 1: SEMESTER-WISE SYLLABUS, NOTES & SKILLS BUILT -->
+    <section id="tab-syllabus" class="tab-panel active">
+      <div class="section-header">
+        <div>
+          <h2>ICAR 6th Deans' Committee Semester-Wise Syllabus & Study Notes</h2>
+          <p>4 Years • 8 Semesters • 167 Institutional Credits + 10 Online Course Credits = 177 Total Credits (<a href="https://icar.org.in/sites/default/files/2026-06/SIXTH%20DEANS%20COMMITTEE%20VOL%201%20FINAL%207-3-2026.pdf" target="_blank">Official ICAR Report</a> | <a href="https://agridots.com/courses/bsc-agriculture/sixth-deans-committee-syllabus/bsc-agriculture-6th-deans-committee-complete-syllabus" target="_blank">AgriDots Syllabus Hub</a>)</p>
+        </div>
+      </div>
+
+      <div class="filter-bar">
+        <select id="semesterSelect" onchange="renderSyllabus()">
+          <option value="all">Show All 8 Semesters</option>
+          <option value="1">Semester I — Foundation & Fundamentals (21 Credits)</option>
+          <option value="2">Semester II — Basic Sciences & Crop Protection (21 Credits)</option>
+          <option value="3">Semester III — Crop Production & Genetics (21 Credits)</option>
+          <option value="4">Semester IV — Rabi Crops, AI & Soil Management (21 Credits)</option>
+          <option value="5">Semester V — Advanced Crop Sciences (22 Credits)</option>
+          <option value="6">Semester VI — Biotechnology, Stats & Sustainability (21 Credits)</option>
+          <option value="7">Semester VII — Elective Specialisation (20 Credits)</option>
+          <option value="8">Semester VIII — Student READY / RAWE (20 Credits)</option>
+        </select>
+        <input type="text" id="subjectSearch" placeholder="Search course name or skill (e.g., Agronomy, AI, Genetics)..." oninput="renderSyllabus()" />
+      </div>
+
+      <div id="syllabusContainer" class="grid-2"></div>
+    </section>
+
+    <!-- TAB 2: STUDY TASK TRACKER -->
+    <section id="tab-tracker" class="tab-panel">
+      <div class="section-header">
+        <div>
+          <h2>Personal Study & Exam Task Manager</h2>
+          <p>Track your semester practical records, SEC skill portfolios, and IBPS AFO / ICAR JRF revision goals. Tasks auto-save in your browser.</p>
+        </div>
+      </div>
+
+      <div class="progress-box">
+        <div style="display:flex; justify-content:space-between; font-weight:700;">
+          <span>Study Completion Progress</span>
+          <span id="progressText">0 / 0 Tasks Completed (0%)</span>
+        </div>
+        <div class="progress-bar-bg">
+          <div id="progressBar" class="progress-bar-fill"></div>
+        </div>
+      </div>
+
+      <div class="filter-bar">
+        <input type="text" id="newTaskInput" placeholder="Add a study task (e.g., Revise Kharif Crop Production notes)..." />
+        <select id="newTaskCategory">
+          <option value="Semester Exam">Semester Exam</option>
+          <option value="Practical / SEC">Practical / SEC Portfolio</option>
+          <option value="IBPS AFO / NABARD">IBPS AFO / NABARD Prep</option>
+          <option value="ICAR PG / JRF">ICAR PG / JRF Prep</option>
+        </select>
+        <button class="btn-primary" onclick="addTask()">+ Add Study Task</button>
+      </div>
+
+      <ul id="taskList" class="task-list"></ul>
+    </section>
+
+    <!-- TAB 3: RANK-WISE GOVT & PRIVATE COLLEGES + ENTRANCE EXAMS -->
+    <section id="tab-colleges" class="tab-panel">
+      <div class="section-header">
+        <div>
+          <h2>Rank-Wise Govt & Private Agriculture Universities + Entrance Routes</h2>
+          <p>Based on official <a href="https://www.nirfindia.org/Rankings/2025/AgricultureRanking.html" target="_blank">NIRF 2025 Agriculture & Allied Sectors Rankings</a> & <a href="https://agridots.com/courses/bsc-agriculture/about-bsc-agriculture/top-agricultural-universities-india" target="_blank">Admission Guide</a></p>
+        </div>
+      </div>
+
+      <div class="filter-bar">
+        <select id="collegeTypeFilter" onchange="renderColleges()">
+          <option value="all">All Institution Types (Govt + Private)</option>
+          <option value="Govt">Government (ICAR Deemed / Central / State SAU)</option>
+          <option value="Private">Private Universities (NIRF Ranked)</option>
+        </select>
+        <input type="text" id="collegeSearch" placeholder="Search by university, state, or entrance exam (e.g., CUET, PAU, MP PAT)..." oninput="renderColleges()" />
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>NIRF Rank</th>
+              <th>University / College</th>
+              <th>Type & Location</th>
+              <th>Entrance Way (UG / PG)</th>
+              <th>Approx. UG Fee / Yr</th>
+            </tr>
+          </thead>
+          <tbody id="collegeTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- TAB 4: SKILL-BASED COURSES -->
+    <section id="tab-skills" class="tab-panel">
+      <div class="section-header">
+        <div>
+          <h2>Skill-Based Courses & Certifications for B.Sc. Agriculture</h2>
+          <p>Mandatory 12-Credit <a href="https://agridots.com/courses/bsc-agriculture/sixth-deans-committee-syllabus/bsc-agriculture-skill-enhancement-courses" target="_blank">ICAR Skill Enhancement Courses (SEC I–VI)</a> + 10-Credit <a href="https://agridots.com/courses/bsc-agriculture/sixth-deans-committee-syllabus/bsc-agriculture-online-courses-credits" target="_blank">SWAYAM/NPTEL Online Courses</a> & <a href="https://www.agriclinics.net/AboutScheme.aspx" target="_blank">MANAGE ACABC</a></p>
+        </div>
+      </div>
+
+      <div id="skillsContainer" class="grid-3"></div>
+    </section>
+
+    <!-- TAB 5: FUTURE OPTIONS & CAREER ROADMAP -->
+    <section id="tab-careers" class="tab-panel">
+      <div class="section-header">
+        <div>
+          <h2>Future Scope, Higher Studies & Government / Private Jobs After B.Sc. Agriculture</h2>
+          <p>Verified career pathways, exams, eligibility & pay bands (<a href="https://agridots.com/courses/bsc-agriculture/about-bsc-agriculture/competitive-exams-after-bsc-agriculture" target="_blank">AgriDots Competitive Exam Ecosystem</a> | <a href="https://sgtuniversity.ac.in/agri/blogs/government-jobs-after-bsc-agriculture" target="_blank">2026 Pay & Exam Guide</a>)</p>
+        </div>
+      </div>
+
+      <div id="careersContainer" class="grid-2"></div>
+    </section>
+
+  </main>
+
+  <!-- =========================================================
+       PART 3: JAVASCRIPT DATA & INTERACTIVE FUNCTIONS
+       ========================================================= -->
+  <script>
+    // 1. VERIFIED SEMESTER-WISE SYLLABUS DATA (ICAR 6th Deans' Committee 2024-26)
+    const syllabusData = [
+      {
+        sem: 1,
+        title: "Semester I — Foundation & Fundamentals",
+        credits: "21 Credits",
+        exitMilestone: "Foundation Phase (Deeksharambh 1-week induction)",
+        courses: [
+          "Fundamentals of Agronomy — 3(2+1)",
+          "Fundamentals of Soil Science — 3(2+1)",
+          "Fundamentals of Horticulture — 3(2+1)",
+          "Farming-based Livelihood Systems — 3(2+1)",
+          "Rural Sociology & Educational Psychology — 2(2+0)",
+          "Communication Skills — 2(1+1)",
+          "Skill Enhancement Course (SEC-I & SEC-II) — 4(0+4)",
+          "NSS-I / NCC-I — 1(0+1)"
+        ],
+        skillsBuilt: "Tillage & crop identification, soil profile sampling, nursery propagation, rural survey & communication",
+        notesUrl: "https://agridots.com/courses/bsc-agriculture/sixth-deans-committee-syllabus/bsc-agriculture-6th-deans-committee-complete-syllabus"
+      },
+      {
+        sem: 2,
+        title: "Semester II — Basic Sciences & Crop Protection",
+        credits: "21 Credits",
+        exitMilestone: "NEP Exit Option: UG Certificate in Agriculture (with 10-week internship)",
+        courses: [
+          "Soil Fertility Management — 3(2+1)",
+          "Fundamentals of Entomology — 3(2+1)",
+          "Fundamentals of Plant Pathology — 3(2+1)",
+          "Environmental Studies & Disaster Management — 3(2+1)",
+          "Livestock and Poultry Management — 2(1+1)",
+          "Personality Development — 2(1+1)",
+          "Skill Enhancement Course (SEC-III & SEC-IV) — 4(0+4)",
+          "NSS-II / NCC-II — 1(0+1)"
+        ],
+        skillsBuilt: "Fertilizer dosage calculation, insect collection & pest pinning, plant disease microscopy, livestock housing & ration formulation",
+        notesUrl: "https://agridots.com/courses/bsc-agriculture/sixth-deans-committee-syllabus/bsc-agriculture-6th-deans-committee-complete-syllabus"
+      },
+      {
+        sem: 3,
+        title: "Semester III — Crop Production & Genetics",
+        credits: "21 Credits",
+        exitMilestone: "Core Crop & Genetics Phase",
+        courses: [
+          "Crop Production Technology – I (Kharif Crops) — 3(1+2)",
+          "Principles of Genetics — 3(2+1)",
+          "Entrepreneurship Development & Business Communication — 3(2+1)",
+          "Production Technology of Fruit & Plantation Crops — 2(1+1)",
+          "Fundamentals of Extension Education — 2(1+1)",
+          "Fundamentals of Nematology — 2(1+1)",
+          "Principles and Practices of Natural Farming — 2(1+1)",
+          "Skill Enhancement Course (SEC-V) — 2(0+2)",
+          "Physical Education, First Aid & Yoga — 2(0+2)"
+        ],
+        skillsBuilt: "Kharif field plot management, Jeevamrit/Beejamrit natural farming inputs, orchard layout, Mendelian genetics problem-solving",
+        notesUrl: "https://agridots.com/courses/bsc-agriculture/sixth-deans-committee-syllabus/bsc-agriculture-6th-deans-committee-complete-syllabus"
+      },
+      {
+        sem: 4,
+        title: "Semester IV — Rabi Crops, AI & Soil Management",
+        credits: "21 Credits",
+        exitMilestone: "NEP Exit Option: UG Diploma in Agriculture (with 10-week internship)",
+        courses: [
+          "Crop Production Technology – II (Rabi Crops) — 3(1+2)",
+          "Agricultural Informatics & Artificial Intelligence — 3(2+1)",
+          "Basics of Plant Breeding — 3(2+1)",
+          "Production Technology of Vegetables & Spices — 2(1+1)",
+          "Principles of Agricultural Economics & Farm Management — 2(2+0)",
+          "Farm Machinery and Power — 2(1+1)",
+          "Water Management — 2(1+1)",
+          "Problematic Soils and their Management — 2(1+1)",
+          "Skill Enhancement Course (SEC-VI) — 2(0+2)"
+        ],
+        skillsBuilt: "AI & crop informatics tools, emasculation & pollination (hybridization), drip/sprinkler irrigation scheduling, gypsum/lime reclamation",
+        notesUrl: "https://agridots.com/courses/bsc-agriculture/sixth-deans-committee-syllabus/bsc-agriculture-6th-deans-committee-complete-syllabus"
+      },
+      {
+        sem: 5,
+        title: "Semester V — Advanced Crop Sciences & Protection",
+        credits: "22 Credits",
+        exitMilestone: "High Exam-Weightage Core Phase (IBPS AFO / NABARD)",
+        courses: [
+          "Agricultural Marketing and Trade — 3(2+1)",
+          "Fundamentals of Crop Physiology — 3(2+1)",
+          "Pest Management in Crops and Stored Grains — 3(2+1)",
+          "Diseases of Field & Horticultural Crops & Management — 3(2+1)",
+          "Introduction to Agro-meteorology — 2(1+1)",
+          "Crop Improvement (Kharif Crops) – I — 2(1+1)",
+          "Weed Management — 2(1+1)",
+          "Ornamental Crops, MAPs and Landscaping — 2(1+1)",
+          "Introductory Agroforestry — 2(1+1)"
+        ],
+        skillsBuilt: "IPM scouting & stored-grain fumigation, herbicide calibration, weather station recording, e-NAM & mandi price analysis",
+        notesUrl: "https://agridots.com/courses/bsc-agriculture/sixth-deans-committee-syllabus/bsc-agriculture-6th-deans-committee-complete-syllabus"
+      },
+      {
+        sem: 6,
+        title: "Semester VI — Biotechnology, Statistics & Seed Tech",
+        credits: "21 Credits",
+        exitMilestone: "Research & Analytical Readiness Phase",
+        courses: [
+          "Fundamentals of Agri Biotechnology — 3(2+1)",
+          "Basic and Applied Agricultural Statistics — 3(2+1)",
+          "Essentials of Plant Biochemistry — 3(2+1)",
+          "Crop Improvement (Rabi Crops) – II — 2(1+1)",
+          "Renewable Energy in Agriculture & Allied Sector — 2(1+1)",
+          "Dryland / Rainfed Agriculture & Watershed Management — 2(1+1)",
+          "Agricultural Microbiology & Phyto-remediation — 2(1+1)",
+          "Agricultural Finance & Cooperation — 2(1+1)",
+          "Fundamentals of Seed Science and Technology — 2(1+1)"
+        ],
+        skillsBuilt: "Plant tissue culture & DNA extraction, ANOVA/CRD/RBD statistical testing, seed purity/germination testing, farm credit appraisal",
+        notesUrl: "https://agridots.com/courses/bsc-agriculture/sixth-deans-committee-syllabus/bsc-agriculture-6th-deans-committee-complete-syllabus"
+      },
+      {
+        sem: 7,
+        title: "Semester VII — Elective Specialisation",
+        credits: "20 Credits (Choose 5 × 4 Credits)",
+        exitMilestone: "Domain Specialisation Phase",
+        courses: [
+          "Geoinformatics, Remote Sensing & Precision Farming (4 Cr)",
+          "Agri-Business Management (4 Cr)",
+          "Protected Cultivation & Hi-tech Horticulture (4 Cr)",
+          "Commercial Seed Production / Commercial Plant Breeding (4 Cr)",
+          "Post Harvest Technology & Value Addition / Food Safety (4 Cr)",
+          "Biopesticides, Biofertilizers & Nanoformulation (4 Cr)"
+        ],
+        skillsBuilt: "GIS/remote sensing mapping, polyhouse climate control, commercial seed certification, food processing & FSSAI grading",
+        notesUrl: "https://agridots.com/courses/bsc-agriculture/sixth-deans-committee-syllabus/bsc-agriculture-6th-deans-committee-complete-syllabus"
+      },
+      {
+        sem: 8,
+        title: "Semester VIII — Student READY Programme",
+        credits: "20 Credits",
+        exitMilestone: "Full B.Sc. (Hons.) Agriculture Degree Completion",
+        courses: [
+          "RAWE (Rural Agricultural Work Experience) — Village stay & farmer advisory",
+          "Industrial Attachment — Seed / Agrochemical / Food company placement",
+          "ELP (Experiential Learning Programme) — Commercial enterprise unit on campus",
+          "Project Work / Institutional Internship"
+        ],
+        skillsBuilt: "Real-world village PRA survey, commercial enterprise profit/loss execution, industry compliance & field advisory",
+        notesUrl: "https://agridots.com/courses/bsc-agriculture/sixth-deans-committee-syllabus/bsc-agriculture-6th-deans-committee-complete-syllabus"
+      }
+    ];
+
+    // 2. VERIFIED NIRF 2025 RANKED GOVT & PRIVATE COLLEGES + ENTRANCE EXAMS
+    const collegeData = [
+      {
+        rank: "#1 (Score 89.23)",
+        name: "ICAR - Indian Agricultural Research Institute (IARI)",
+        url: "https://www.iari.res.in/en/nirf-ranking.php",
+        type: "Govt",
+        location: "New Delhi (ICAR Deemed Univ)",
+        entrance: "CUET (ICAR-UG) for UG hubs; ICAR AIEEA-PG / JRF for MSc & PhD",
+        fee: "₹10,000–30,000/yr"
+      },
+      {
+        rank: "#2 (Score 75.87)",
+        name: "ICAR - National Dairy Research Institute (NDRI)",
+        url: "https://www.nirfindia.org/Rankings/2025/AgricultureRanking.html",
+        type: "Govt",
+        location: "Karnal, Haryana (ICAR Deemed)",
+        entrance: "CUET (ICAR-UG) for B.Tech Dairy Tech; ICAR AIEEA-PG for MSc",
+        fee: "₹20,000–40,000/yr"
+      },
+      {
+        rank: "#3 (Score 75.83)",
+        name: "Punjab Agricultural University (PAU)",
+        url: "https://www.nirfindia.org/Rankings/2025/AgricultureRanking.html",
+        type: "Govt",
+        location: "Ludhiana, Punjab (State SAU)",
+        entrance: "PAU CET (State) + 20% All-India Quota via CUET (ICAR-UG)",
+        fee: "₹25,000–45,000/yr"
+      },
+      {
+        rank: "#4 (Score 68.95)",
+        name: "Banaras Hindu University (Institute of Agricultural Sciences)",
+        url: "https://www.nirfindia.org/Rankings/2025/AgricultureRanking.html",
+        type: "Govt",
+        location: "Varanasi, UP (Central Univ)",
+        entrance: "100% via CUET-UG (B.Sc. Hons. Ag) & CUET-PG",
+        fee: "₹10,000–25,000/yr"
+      },
+      {
+        rank: "#6 (Score 67.06)",
+        name: "Tamil Nadu Agricultural University (TNAU)",
+        url: "https://www.nirfindia.org/Rankings/2025/AgricultureRanking.html",
+        type: "Govt",
+        location: "Coimbatore, Tamil Nadu (State SAU)",
+        entrance: "TNAU Merit Counselling + 20% ICAR Quota via CUET (ICAR-UG)",
+        fee: "₹20,000–45,000/yr"
+      },
+      {
+        rank: "#7 (Score 65.81)",
+        name: "SKUAST-Kashmir",
+        url: "https://www.nirfindia.org/Rankings/2025/AgricultureRanking.html",
+        type: "Govt",
+        location: "Srinagar, J&K (State SAU)",
+        entrance: "SKUAST-K Entrance / Domicile + CUET (ICAR-UG) Quota",
+        fee: "₹15,000–30,000/yr"
+      },
+      {
+        rank: "#9 (Score 61.56)",
+        name: "G.B. Pant University of Agriculture & Technology (GBPUAT)",
+        url: "https://www.nirfindia.org/Rankings/2025/AgricultureRanking.html",
+        type: "Govt",
+        location: "Pantnagar, Uttarakhand (State SAU)",
+        entrance: "GBPUAT Entrance Exam + CUET (ICAR-UG) All-India Quota",
+        fee: "₹25,000–50,000/yr"
+      },
+      {
+        rank: "#10 (Score 61.47)",
+        name: "CCS Haryana Agricultural University (CCS HAU)",
+        url: "https://www.nirfindia.org/Rankings/2025/AgricultureRanking.html",
+        type: "Govt",
+        location: "Hisar, Haryana (State SAU)",
+        entrance: "CCS HAU Entrance Test + CUET (ICAR-UG)",
+        fee: "₹20,000–40,000/yr"
+      },
+      {
+        rank: "#11 (Score 60.35)",
+        name: "University of Agricultural Sciences (UAS), Bengaluru",
+        url: "https://www.uasbangalore.edu.in/wp-content/uploads/2025/11/Syllabus-of-Agri-VI-deans-commitee_compressed.pdf",
+        type: "Govt",
+        location: "Bengaluru, Karnataka (State SAU)",
+        entrance: "KCET (Agriculture Stream + Practical Test) & CUET (ICAR-UG)",
+        fee: "₹20,000–35,000/yr"
+      },
+      {
+        rank: "#14 (Score 58.25)",
+        name: "Dr. Rajendra Prasad Central Agricultural University (RPCAU)",
+        url: "https://www.nirfindia.org/Rankings/2025/AgricultureRanking.html",
+        type: "Govt",
+        location: "Samastipur, Bihar (Central Agri Univ)",
+        entrance: "100% seats via CUET (ICAR-UG) Counselling",
+        fee: "₹18,000–32,000/yr"
+      },
+      {
+        rank: "#15 (Score 58.14)",
+        name: "Amity University",
+        url: "https://www.nirfindia.org/Rankings/2025/AgricultureRanking.html",
+        type: "Private",
+        location: "Noida, Uttar Pradesh (Private Univ)",
+        entrance: "Direct Merit / CUET-UG / University Admission Process",
+        fee: "₹90,000–1,40,000/yr"
+      },
+      {
+        rank: "#17 (Score 57.61)",
+        name: "Lovely Professional University (LPU — ICAR Accredited School)",
+        url: "https://www.nirfindia.org/Rankings/2025/AgricultureRanking.html",
+        type: "Private",
+        location: "Phagwara, Punjab (Private Univ)",
+        entrance: "LPUNEST / CUET-UG",
+        fee: "₹1,20,000–1,60,000/yr"
+      },
+      {
+        rank: "#28 (Score 50.60) + Central India SAUs",
+        name: "IGKV Raipur (#28) / JNKVV Jabalpur & RVSKVV Gwalior (MP)",
+        url: "https://agridots.com/courses/bsc-agriculture/about-bsc-agriculture/competitive-exams-after-bsc-agriculture",
+        type: "Govt",
+        location: "Chhattisgarh & Madhya Pradesh (State SAUs)",
+        entrance: "MP PAT (Madhya Pradesh) / CG PAT + 20% CUET (ICAR-UG)",
+        fee: "₹15,000–35,000/yr"
+      },
+      {
+        rank: "#33 (Score 49.38)",
+        name: "S.R.M. Institute of Science and Technology",
+        url: "https://www.nirfindia.org/Rankings/2025/AgricultureRanking.html",
+        type: "Private",
+        location: "Chennai, Tamil Nadu (Private Deemed)",
+        entrance: "SRMJEEE / CUET-UG Merit",
+        fee: "₹1,00,000–1,50,000/yr"
+      }
+    ];
+
+    // 3. VERIFIED SKILL-BASED COURSES DATA
+    const skillCourses = [
+      {
+        badge: "ICAR SEC Group A (2 Cr Practical)",
+        title: "Soil Testing, Seed Quality & Micro-Irrigation",
+        provider: "ICAR 6th Deans' Committee SEC I–VI",
+        url: "https://agridots.com/courses/bsc-agriculture/sixth-deans-committee-syllabus/bsc-agriculture-skill-enhancement-courses",
+        desc: "100% practical assessment (no theory exam). Covers soil sampling & NPK recommendation, seed germination/purity testing, vermicomposting, and drip/sprinkler installation."
+      },
+      {
+        badge: "ICAR SEC Group B (2 Cr Practical)",
+        title: "Agricultural Drone Operation & GPS Farm Mapping",
+        provider: "ICAR 6th Deans' Committee SEC Module",
+        url: "https://agridots.com/courses/bsc-agriculture/sixth-deans-committee-syllabus/bsc-agriculture-skill-enhancement-courses",
+        desc: "Hands-on drone surveillance, spraying safety, GPS farm boundary calculation, and digital advisory apps (e-NAM, Kisan Suvidha, mKisan)."
+      },
+      {
+        badge: "ICAR SEC Group C (2 Cr Practical)",
+        title: "Food Processing, FPO Governance & Mandi Linkages",
+        provider: "ICAR 6th Deans' Committee SEC Module",
+        url: "https://agridots.com/courses/bsc-agriculture/sixth-deans-committee-syllabus/bsc-agriculture-skill-enhancement-courses",
+        desc: "Builds agribusiness skills in dehydration/pickling, packaging & labelling, Farmer Producer Organisation (FPO) registration, and farm accounting."
+      },
+      {
+        badge: "SWAYAM-NPTEL Online Credit",
+        title: "Precision Agriculture & Machine Learning for Soil/Crops",
+        provider: "IIT Kharagpur / NPTEL (Counts toward 10 Online Credits)",
+        url: "https://onlinecourses.nptel.ac.in/e-learning/preview/noc26_ag02",
+        desc: "Covers sensor-based nutrient management, variable rate technology, and ML applications in crop yield prediction (<a href='https://onlinecourses.nptel.ac.in/noc22_ag05/preview' target='_blank'>ML Course</a>)."
+      },
+      {
+        badge: "SWAYAM-NPTEL Online Credit",
+        title: "Organic Farming & Crop Modeling Simulation",
+        provider: "SWAYAM-NPTEL National Portal",
+        url: "https://onlinecourses.nptel.ac.in/noc19_ag04/preview",
+        desc: "Resource-efficient organic certification standards, biological pest management, and <a href='https://onlinecourses.nptel.ac.in/noc26_ag01/preview' target='_blank'>crop simulation modeling</a>."
+      },
+      {
+        badge: "Govt Startup & Skill Scheme",
+        title: "MANAGE ACABC (Agri-Clinics & Agri-Business Centres)",
+        provider: "Ministry of Agriculture & MANAGE Hyderabad / ASCI",
+        url: "https://www.agriclinics.net/AboutScheme.aspx",
+        desc: "45-day residential entrepreneurship training for B.Sc. Agriculture graduates with credit-linked composite subsidy (up to 36%–44%) to launch an agri-venture, plus <a href='https://asci-india.com/' target='_blank'>ASCI Skill Certifications</a>."
+      }
+    ];
+
+    // 4. VERIFIED CAREER & JOB OPTIONS DATA
+    const careerOptions = [
+      {
+        category: "Banking & Rural Finance (Top Recruiter)",
+        title: "IBPS AFO (Agriculture Field Officer) & NABARD Grade A",
+        salary: "IBPS AFO: ₹48,000–65,000/mo | NABARD Grade A: ₹85,000–1,05,000/mo",
+        exam: "IBPS SO (Prelims + Agriculture Mains + Interview) & NABARD Grade A (Prelims + ARD/ESI Mains)",
+        url: "https://agridots.com/courses/bsc-agriculture/about-bsc-agriculture/competitive-exams-after-bsc-agriculture",
+        details: "Public sector banks and NABARD recruit 4-year B.Sc. (Hons.) Agriculture graduates annually for farm credit appraisal, rural development, and priority-sector lending."
+      },
+      {
+        category: "Central Govt, PSUs & All-India Services",
+        title: "FCI AGT (Tech), UPSC Indian Forest Service (IFS) & SSC Posts",
+        salary: "FCI AGT: ₹60,000–75,000/mo | UPSC IFS: ₹56,100/mo Basic (Level 10)",
+        exam: "FCI Phase I & II (Agri Paper) | UPSC IFS Prelims + Forestry/Agri Mains | SSC Selection Posts",
+        url: "https://sgtuniversity.ac.in/agri/blogs/government-jobs-after-bsc-agriculture",
+        details: "Roles span grain quality inspection and storage in Food Corporation of India, All-India Forest Service officers, and Technical Assistants in Plant Quarantine & Seed Directorates."
+      },
+      {
+        category: "State Govt Agriculture Departments",
+        title: "ADO / AO / RAEO / SADO & Commodity Boards",
+        salary: "₹35,000–65,000/mo (State Group B Gazetted / Non-Gazetted)",
+        exam: "MPESB RAEO/SADO, UPSSSC AGTA, RPSC AAO, MPSC AO, KPSC AO, Tea/Coffee/Rubber Boards",
+        url: "https://www.agriaddict.in/blog/government-exams-for-b-sc-agriculture-graduates",
+        details: "District and block-level agricultural administration, seed/fertilizer licensing, and extension schemes. High overlap with your B.Sc. core Agronomy and Soil Science syllabus."
+      },
+      {
+        category: "Higher Studies, Research & Agribusiness MBA",
+        title: "ICAR AIEEA-PG / JRF, ASRB NET/ARS & IIM ABM / IRMA / MANAGE",
+        salary: "ICAR JRF Stipend: ₹31,000/mo | Agribusiness MBA Placements: ₹8–20 LPA",
+        exam: "ICAR AIEEA-PG & AICE-JRF/SRF | CAT / CMAT for IIM-A FABM, IIM-L ABM, MANAGE, IRMA, NIAM",
+        url: "https://agridots.com/courses/bsc-agriculture/about-bsc-agriculture/competitive-exams-after-bsc-agriculture",
+        details: "Pursue M.Sc./Ph.D. to become an ICAR Scientist (ASRB ARS) or KVK Subject Matter Specialist (SMS), or crack CAT for top corporate leadership roles at Syngenta, Bayer, UPL, ITC, Amul, and DeHaat."
+      }
+    ];
+
+    // 5. DEFAULT STUDY TASKS (Saved in Browser localStorage)
+    const defaultTasks = [
+      { id: 1, title: "Download ICAR 6th Deans' Committee Syllabus & check Semester I credits", category: "Semester Exam", done: true },
+      { id: 2, title: "Complete Fundamentals of Agronomy & Soil Science practical record book", category: "Practical / SEC", done: false },
+      { id: 3, title: "Document SEC-I & SEC-II practical skill demonstration photos for CV portfolio", category: "Practical / SEC", done: false },
+      { id: 4, title: "Revise Kharif & Rabi Crop Production notes for IBPS AFO / State Exam base", category: "IBPS AFO / NABARD", done: false }
+    ];
+
+    let tasks = JSON.parse(localStorage.getItem("agripath_tasks_v1")) || defaultTasks;
+
+    // Switch between the 5 navigation tabs
+    function switchTab(tabName, btnElement) {
+      document.querySelectorAll(".tab-panel").forEach(panel => panel.classList.remove("active"));
+      document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
+      document.getElementById("tab-" + tabName).classList.add("active");
+      btnElement.classList.add("active");
+    }
+
+    // Render Semester-Wise Syllabus & Notes cards
+    function renderSyllabus() {
+      const semFilter = document.getElementById("semesterSelect").value;
+      const query = document.getElementById("subjectSearch").value.toLowerCase();
+      const container = document.getElementById("syllabusContainer");
+
+      const filtered = syllabusData.filter(item => {
+        const matchesSem = semFilter === "all" || String(item.sem) === semFilter;
+        const textBlob = (item.title + " " + item.courses.join(" ") + " " + item.skillsBuilt).toLowerCase();
+        const matchesQuery = !query || textBlob.includes(query);
+        return matchesSem && matchesQuery;
+      });
+
+      container.innerHTML = filtered.map(item => `
+        <div class="card">
+          <span class="pill">${item.credits}</span>
+          <span class="pill accent">${item.exitMilestone}</span>
+          <h3>${item.title}</h3>
+          <ul style="margin: 10px 0 12px 18px; font-size: 0.88rem; color: var(--text);">
+            ${item.courses.map(c => `<li>${c}</li>`).join("")}
+          </ul>
+          <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 10px;">
+            <strong>🛠️ Skills Built:</strong> ${item.skillsBuilt}
+          </p>
+          <a href="${item.notesUrl}" target="_blank">📘 Open Verified Semester Notes & Credit Breakdown →</a>
+        </div>
+      `).join("");
+    }
+
+    // Render Study Tasks & Progress Bar
+    function renderTasks() {
+      localStorage.setItem("agripath_tasks_v1", JSON.stringify(tasks));
+      const list = document.getElementById("taskList");
+      const doneCount = tasks.filter(t => t.done).length;
+      const total = tasks.length;
+      const pct = total === 0 ? 0 : Math.round((doneCount / total) * 100);
+
+      document.getElementById("progressText").textContent = `${doneCount} / ${total} Tasks Completed (${pct}%)`;
+      document.getElementById("progressBar").style.width = pct + "%";
+
+      list.innerHTML = tasks.map(t => `
+        <li class="task-item ${t.done ? 'done' : ''}">
+          <div class="task-left">
+            <input type="checkbox" ${t.done ? 'checked' : ''} onchange="toggleTask(${t.id})" style="width:18px; height:18px; cursor:pointer;" />
+            <div>
+              <span class="task-title" style="font-weight:600; font-size:0.93rem;">${t.title}</span>
+              <div style="margin-top:2px;"><span class="pill">${t.category}</span></div>
+            </div>
+          </div>
+          <button class="delete-btn" onclick="deleteTask(${t.id})">Remove</button>
+        </li>
+      `).join("");
+    }
+
+    function addTask() {
+      const input = document.getElementById("newTaskInput");
+      const category = document.getElementById("newTaskCategory").value;
+      const title = input.value.trim();
+      if (!title) return;
+      tasks.unshift({ id: Date.now(), title, category, done: false });
+      input.value = "";
+      renderTasks();
+    }
+
+    function toggleTask(id) {
+      tasks = tasks.map(t => t.id === id ? { ...t, done: !t.done } : t);
+      renderTasks();
+    }
+
+    function deleteTask(id) {
+      tasks = tasks.filter(t => t.id !== id);
+      renderTasks();
+    }
+
+    // Render Ranked Colleges Table
+    function renderColleges() {
+      const typeFilter = document.getElementById("collegeTypeFilter").value;
+      const query = document.getElementById("collegeSearch").value.toLowerCase();
+      const tbody = document.getElementById("collegeTableBody");
+
+      const filtered = collegeData.filter(c => {
+        const matchesType = typeFilter === "all" || c.type === typeFilter;
+        const blob = (c.rank + " " + c.name + " " + c.location + " " + c.entrance).toLowerCase();
+        return matchesType && (!query || blob.includes(query));
+      });
+
+      tbody.innerHTML = filtered.map(c => `
+        <tr>
+          <td><strong>${c.rank}</strong></td>
+          <td><a href="${c.url}" target="_blank">${c.name}</a></td>
+          <td><span class="pill ${c.type === 'Private' ? 'accent' : ''}">${c.type}</span><br/><small>${c.location}</small></td>
+          <td>${c.entrance}</td>
+          <td>${c.fee}</td>
+        </tr>
+      `).join("");
+    }
+
+    // Render Skill Courses
+    function renderSkills() {
+      const container = document.getElementById("skillsContainer");
+      container.innerHTML = skillCourses.map(s => `
+        <div class="card">
+          <span class="pill accent">${s.badge}</span>
+          <h3>${s.title}</h3>
+          <p style="font-size:0.82rem; color:var(--muted); margin-bottom:8px;"><strong>${s.provider}</strong></p>
+          <p style="font-size:0.88rem; margin-bottom:12px;">${s.desc}</p>
+          <a href="${s.url}" target="_blank">Explore Course & Syllabus →</a>
+        </div>
+      `).join("");
+    }
+
+    // Render Careers
+    function renderCareers() {
+      const container = document.getElementById("careersContainer");
+      container.innerHTML = careerOptions.map(c => `
+        <div class="card">
+          <span class="pill">${c.category}</span>
+          <h3>${c.title}</h3>
+          <p style="font-size:0.86rem; color:var(--primary); font-weight:700; margin:6px 0;">💰 ${c.salary}</p>
+          <p style="font-size:0.85rem; color:var(--muted); margin-bottom:8px;"><strong>📝 Entrance / Exam:</strong> ${c.exam}</p>
+          <p style="font-size:0.88rem; margin-bottom:10px;">${c.details}</p>
+          <a href="${c.url}" target="_blank">View Exam Pattern & Eligibility →</a>
+        </div>
+      `).join("");
+    }
+
+    // Initialize all views on page load
+    renderSyllabus();
+    renderTasks();
+    renderColleges();
+    renderSkills();
+    renderCareers();
+  </script>
+</body>
+</html>
